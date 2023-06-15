@@ -19,9 +19,17 @@ env.ENVIRONMENT = readCommitVar('env', 'Environment')
 
 Of course this would mean using an environment variable instead of referencing
 the params directly.
+
+A third parameter is available to override the commit message, useful for is using PR name or other external string
 */
-def call(String commitVariableName, String paramVariableName = "null") {
-    String message = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+def call(String commitVariableName, String paramVariableName = "null", String messageOverride = "null") {
+    String message = ""
+    if(!(messageOverride.equals("null") || messageOverride.equals(""))) {
+        message = messageOverride
+    } else {
+        message = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
+    }
+
     def words = message.split(/\s/)
 
     for (String word : words) {
