@@ -25,6 +25,7 @@ A third parameter is available to override the commit message, useful for is usi
 def call(String commitVariableName, String paramVariableName = "null", String messageOverride = "null") {
     String message = ""
     if(!(messageOverride.equals("null") || messageOverride.equals(""))) {
+        println("Overriding commit message with (${messageOverride})")
         message = messageOverride
     } else {
         message = sh (script: 'git log -1 --pretty=%B', returnStdout: true).trim()
@@ -59,7 +60,7 @@ def call(String commitVariableName, String paramVariableName = "null", String me
             }
         }
     }
-
+    println "Didn't find param (${commitVariableName}) in commit message"
     // case 4: variable not found in commmit message, return job param
     if(!(paramVariableName.equals("null") || paramVariableName.equals(""))){
         println "Returning value from job parameter"
