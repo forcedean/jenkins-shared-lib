@@ -24,7 +24,7 @@ A third parameter is available to override the commit message, useful for is usi
 */
 def call(String commitVariableName, String paramVariableName = "null", String messageOverride = "null") {
     String message = ""
-    if(!(messageOverride.equals("null") || messageOverride.equals(""))) {
+    if(messageOverride && (!(messageOverride.equals("null") || messageOverride.equals("")))) {
         println("Overriding commit message with (${messageOverride})")
         message = messageOverride
     } else {
